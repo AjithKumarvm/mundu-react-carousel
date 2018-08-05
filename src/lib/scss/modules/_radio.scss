@@ -1,0 +1,41 @@
+.radio{
+    .options{
+        width:auto;
+        display:inline-block;
+        padding-top:10px;
+        padding-right:10px;
+        cursor: pointer;
+        .disabled {
+            color:#ababab;
+        }
+        .enabled {
+            color:#000;
+        }
+    }
+    .selectedOuter {
+        width:20px;
+        height:20px;
+        display:inline-block;
+        border-radius:50%;
+        border:1px solid #22c82d;
+        margin-right:8px;
+        vertical-align:middle;
+    }
+    .selectedInner {
+        width:8px;
+        height:8px;
+        margin:5px;
+        display:inline-block;
+        border-radius:50%;
+        background-color:#22c82d;
+    }
+    .unSelectedOuter {
+        width:20px;
+        height:20px;
+        display:inline-block;
+        border-radius:50%;
+        border:1px solid #dcdcdc;
+        margin-right:8px;
+        vertical-align:middle;
+    }
+}

@@ -1,0 +1,73 @@
+.plan{
+  width:100%;
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 10px;
+  padding-top: 5px;
+  display: inline-block;
+  .amountArea{
+    width:30%;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    .amount{
+      border:1px solid #48b0d2;
+      color:#48b0d2;
+      width: auto;
+      display: inline-block;
+      padding: 4px;
+      margin-top: 15px;
+    }
+  }
+  .detailArea{
+    width: 70%;
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    .name{
+      width: 100%;
+      display: inline-block;
+      margin-top: 5px;
+      font-size: 14px;
+      color:#333333;
+    }
+    .specs{
+      width: 100%;
+      display: inline-block;
+      .block{
+        width: 33.33%;
+        display: inline-block;
+        font-size: 12px;
+        .blockHeader{
+          font-size: 11px;
+          color:#ababab;
+        }
+      }
+    }
+  }
+  &:hover{
+    background-color: #efefef;
+    cursor: pointer;
+  }
+  &:active{
+    background-color: #e6e6e6;
+  }
+}
+.displayKeys{
+  width: 100%;
+  display: inline-block;
+  padding-bottom: 7px;
+  .key{
+    width: 40%;
+    display: inline-block;
+    vertical-align: top;
+    color:#969595;
+    text-transform: capitalize;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .value{
+    width: 60%;
+    display: inline-block;
+    vertical-align: top;
+  }
+}

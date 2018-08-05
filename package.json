@@ -1,0 +1,49 @@
+{
+  "name": "mundu-react-carousel",
+  "version": "0.1.6",
+  "description": "A minimal boilerplate for building a react component for npm, including a demo page.",
+  "main": "lib/index",
+  "scripts": {
+    "dev": "concurrently \"npm run lib:watch\" \"npm run docs\"",
+    "lib": "babel src/lib -d lib --copy-files",
+    "lib:watch": "babel src/lib -w -d lib --copy-files",
+    "docs": "webpack-dev-server --mode development",
+    "docs:prod": "webpack --mode production"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^15.3.0 || ^16.2.0",
+    "react-dom": "^15.3.0 || ^16.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.46",
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.46",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "@babel/preset-react": "^7.0.0-beta.46",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.0-beta.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "concurrently": "^3.5.1",
+    "css-loader": "^0.28.11",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.9.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15",
+    "webpack-dev-server": "^3.1.3"
+  },
+  "author": "Ajith Kumar VM <ajithkumarvm@gmail.com>",
+  "homepage": "https://github.com/AjithKumarvm/mundu-react-carousel",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AjithKumarvm/mundu-react-carousel.git"
+  }
+}

@@ -1,0 +1,189 @@
+@import "../../base/mixins";
+
+$errorColor:#cc001a;
+
+.textFieldWrapper{
+    width: 100%;
+    display: inline-block;
+    input{
+        outline: 0px;
+    }
+    .group {
+        position: relative;
+        margin-top: 40px;
+        margin-bottom:15px;
+        margin-right:10px;
+        margin-left:10px;
+        label {
+            color: #dbdbdb;
+            font-weight: normal;
+            position: absolute;
+            pointer-events: none;
+            top: 1px;
+            left: 0px;
+            transition: 0.2s ease all;
+            -moz-transition: 0.2s ease all;
+            -o-transition: 0.2s ease all;
+            -webkit-transition: 0.2s ease all;
+        }
+    }
+    .textGroup{
+        margin: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        .wrapper{
+            position:relative;
+        }
+        label{
+            font-size: 13px;
+            color:#6e6e6e;
+        }
+        input{
+            width: 100%;
+            padding: 14px;
+            padding-bottom:10px;
+            border-radius: 3px;
+            border:1px solid #BDCCD5;
+            font-size:15px;
+            color:#282828;
+            margin-top:4px;
+            @include placeholder-color(#d2d2d2);
+        }
+        input ~ .countryCode{
+            position: absolute;
+            top: 19px;
+            left: 8px;
+            color: #d2d2d2;
+            font-size:15px;
+        }
+        .error{
+            width: 100%;
+            display: block;
+            font-size: 12px;
+            color: $errorColor;
+            text-align: right;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+    .textGroup.readOnly{
+        opacity: .7;
+        input{
+            cursor: not-allowed;
+        }
+    }
+    .textInput.invalid{
+        border:1px solid $errorColor;
+    }
+    .inputMaterial {
+        font-size: 13px;
+        display: block;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #ABABAB;
+        background: none;
+        min-width: 150px;
+        padding:0px;
+        padding-bottom: 9px;
+    }
+    .inputMaterial.invalid {
+        border-bottom: 1px solid $errorColor;
+    }
+    .inputMaterial:focus {
+        outline: none;
+    }
+    .group .error {
+        width: 100%;
+        display: block;
+        font-size: 12px;
+        color:$errorColor;
+        text-align: left;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    /* LABEL ======================================= */
+    /* active state */
+    .inputMaterial:focus ~ label, .inputMaterial:valid ~ label,.inputMaterial[type=number]:valid ~ label,label.small {
+        top: -16px;
+        font-size: 11px;
+        color: #ababab;
+    }
+    .inputMaterial:focus ~ label.invalid,.inputMaterial[type=number]:invalid ~ label.invalid {
+        color: $errorColor;
+    }
+    /* BOTTOM BARS ================================= */
+    .bar {
+        position: relative;
+        display: block;
+    }
+    .bar.invalid:before, .bar.invalid:after {
+        background: $errorColor;
+    }
+    .bar:before, .bar:after {
+        content: '';
+        height: 1px;
+        width: 0;
+        bottom: 0px;
+        position: absolute;
+        background: #279582;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -o-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+    .bar:before {
+        left: 50%;
+    }
+    .bar:after {
+        right: 50%;
+    }
+    /* active state */
+    .inputMaterial:focus ~ .bar:before, .inputMaterial:focus ~ .bar:after {
+        width: 50%;
+    }
+    /* active state */
+    .inputMaterial:focus ~ .highlight {
+        -webkit-animation: inputHighlighter 0.3s ease;
+        -moz-animation: inputHighlighter 0.3s ease;
+        animation: inputHighlighter 0.3s ease;
+    }
+    input ~ .countryCode{
+        position: absolute;
+        top: 1px;
+        left: -21px;
+        color: #ababab;
+        font-size: 13px;
+        pointer-events: none;
+    }
+    .numberError{
+        display: none;
+    }
+    /* ANIMATIONS ================ */
+    @-webkit-keyframes inputHighlighter {
+        from {
+            background: #5264AE;
+        }
+            to {
+                width: 0;
+                background: transparent;
+        }
+    }
+    @-moz-keyframes inputHighlighter {
+        from {
+            background: #5264AE;
+        }
+            to {
+                width: 0;
+                background: transparent;
+        }
+    }
+    @keyframes inputHighlighter {
+        from {
+                background: #5264AE;
+        }
+            to {
+                width: 0;
+                background: transparent;
+        }
+    }
+}
