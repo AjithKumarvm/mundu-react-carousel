@@ -8,7 +8,8 @@ const styles = {
     position: 'relative',
     border: '1px solid #CCC',
     marginLeft: 200,
-    touchAction: 'none'
+    touchAction: 'none',
+    overflow: 'hidden'
   },
   slideWrapper: {
     position: 'absolute',
@@ -18,21 +19,25 @@ const styles = {
   leftArrow: {
     position: 'absolute',
     top: 200,
-    left: 0
+    left: 0,
+    padding: 20,
+    touchAction: 'none'
   },
   rightArrow: {
     position: 'absolute',
     top: 200,
-    right: 0
+    right: 0,
+    padding: 20,
+    touchAction: 'none'
   }
 }
-const getCurrentStyle = index => {
+const getCurrentStyle = position => {
   const positions = {
-    0: { transform: 'translateX(-100%)' },
-    1: { transform: 'translateX(0%)' },
-    2: { transform: 'translateX(100%)' }
+    left: { transform: 'translateX(-100%)' },
+    center: { transform: 'translateX(0%)' },
+    right: { transform: 'translateX(100%)' }
   }
-  return positions[index]
+  return positions[position]
 }
 
 const getPosition = element => {
@@ -55,21 +60,48 @@ Math.easeInOutQuad = function (t, b, c, d) {
   return -c / 2 * (t * (t - 2) - 1) + b
 }
 
-class MunduCarousel extends React.PureComponent {
+let xDown = null                                                       
+let yDown = null
+let activeAnimationId = null
+let animating = false
+
+class MunduCarousel extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      data: 293,
       left: 0,
       center: 1,
       right: 2,
-      currentSlidePerc: 0
+      currentSlidePerc: 0,
+      slides: 0
     }
   }
   componentDidMount () {
     window.addEventListener('touchstart', () => null, { passive: false })
+    const slides = this.props.children.length
+    let left = 0
+    let center = 1
+    let right = 2
+    if (slides === 1) {
+      left = 0
+      center = 0
+      right = 0
+    } else if (slides === 2) {
+      left = 0
+      center = 1
+      right = 0
+    } else {
+      left = 0
+      center = 1
+      right = 2
+    }
+    console.log(slides, 'sliders')
+    console.log(left, center, right)
     this.setState({
-      slides: this.props.children.length
+      slides,
+      left,
+      center,
+      right
     })
   }
   getTouchParams (event) {
@@ -84,69 +116,157 @@ class MunduCarousel extends React.PureComponent {
     return { percToMove }
   }
   onTouchStart (event) {
+    this.handleTouchStart(event)
     const { percToMove } = this.getTouchParams(event)
-    this.setState({
-      currentSlidePerc: percToMove
-    })
+    console.log('percToMove', percToMove)
+    // this.setState({
+    //   currentSlidePerc: percToMove
+    // })
+  }
+  onTouchMove (event) {
+    this.handleTouchMove(event)
+    const { percToMove } = this.getTouchParams(event)
+    const currentSlidePerc = this.state.currentSlidePerc
+    //this.applyTransforms(percToMove, currentSlidePerc)
   }
   onTouchEnd (event) {
     const { percToMove } = this.getTouchParams(event)
-    this.setState({
-      currentSlidePerc: percToMove
-    })
+    // this.setState({
+    //   currentSlidePerc: percToMove
+    // })
+    console.log('onTouchEnd', percToMove)
   }
   applyTransforms (percToMove, currentSlidePerc) {
     const { left, center, right } = this.state
-    const center_slide = this.refs[`slide_${center}`]
-    center_slide.style.transform = `translateX(${percToMove - currentSlidePerc}%)`
     const left_slider = this.refs[`slide_${left}`]
-    left_slider.style.transform = `translateX(${percToMove - currentSlidePerc - 100}%)`
+    if (left_slider) {
+      left_slider.style.transform = `translateX(${percToMove - currentSlidePerc - 100}%)`
+    }
+    const center_slide = this.refs[`slide_${center}`]
+    if (center_slide) {
+      center_slide.style.transform = `translateX(${percToMove - currentSlidePerc}%)`
+    }
     const right_slider = this.refs[`slide_${right}`]
-    right_slider.style.transform = `translateX(${percToMove - currentSlidePerc + 100}%)`
+    if (right_slider) {
+      right_slider.style.transform = `translateX(${percToMove - currentSlidePerc + 100}%)`
+    }
   }
-  onTouchMove (event) {
-    const { percToMove } = this.getTouchParams(event)
-    const currentSlidePerc = this.state.currentSlidePerc
-    this.applyTransforms(percToMove, currentSlidePerc)
+  handleTouchStart (evt) {
+    xDown = evt.touches[0].clientX
+    yDown = evt.touches[0].clientY
   }
-  animateSlide (direction, duration = 500) {
-    const to = direction == 'left'?100:-100
-    const start = 0
+  handleTouchMove (evt) {
+    if (!xDown || !yDown) {
+      return
+    }
+
+    const xUp = evt.touches[0].clientX
+    const yUp = evt.touches[0].clientY
+
+    const xDiff = xDown - xUp
+    const yDiff = yDown - yUp
+    if (Math.abs(xDiff) + Math.abs(yDiff) > 150) {
+      // to deal with to short swipes
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        /* most significant */
+        if (xDiff > 0) {
+          /* left swipe */
+          this.slideRight()
+        } else {
+          /* right swipe */
+          this.slideLeft()
+        }
+      }
+      /* reset values */
+      xDown = null
+      yDown = null
+    }
+  }
+  animateSlide (direction, duration = 300) {
+    const animationId = Date.now()
+    activeAnimationId = animationId
+    const to = direction == 'left' ? 100 : -100
+    const start = this.state.currentSlidePerc
+    console.log('start', start)
     const change = to - start
     let currentTime = 0
-    const increment = 20
+    const increment = 5
     const self = this
-
     const animateScroll = function () {
+      animating = true
+      // if(activeAnimationId !== animationId){
+      //   // early animation exit
+      //   console.log('animation aborted')
+      //   self.applyTransforms(to, 0)
+      //   self.animationEnd(direction)
+      //   return
+      // }
       currentTime += increment
       const val = Math.easeInOutQuad(currentTime, start, change, duration)
       self.applyTransforms(val, 0)
       if (currentTime < duration) {
         setTimeout(animateScroll, increment)
-      }else{
-          self.animationEnd(direction)
+      } else {
+        activeAnimationId = animationId
+        self.animationEnd(direction)
+        animating = false
       }
     }
     animateScroll()
   }
-  animationEnd(direction){
-    console.log('animationEnd', direction)
-  }
-  slideLeft () {
-    this.animateSlide('left')
-  }
-  slideRight () {
-    this.animateSlide('right')
-  }
-  slideButtons (direction) {
-    if (direction == 'left') {
-      this.slideLeft()
+  updatePositions (direction) {
+    if(direction === 'left') {
+      this.setState({
+        left: this.state.left ? --this.state.left : this.state.slides - 1,
+        center: this.state.center
+          ? --this.state.center
+          : this.state.slides - 1,
+        right: this.state.right ? --this.state.right : this.state.slides - 1
+      })
     } else {
-      this.slideRight()
+      this.setState({
+        left: this.state.left < this.state.slides - 1 ? ++this.state.left : 0,
+        center: this.state.center < this.state.slides - 1
+          ? ++this.state.center
+          : 0,
+        right: this.state.right < this.state.slides - 1
+          ? ++this.state.right
+          : 0
+      })
     }
   }
+  animationEnd (direction) {
+    console.log('animationEnd', direction)
+    try {
+      this.applyTransforms(0, 0)
+      this.updatePositions(direction)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  slideLeft () {
+    !animating && this.animateSlide('left')
+  }
+  slideRight () {
+    !animating && this.animateSlide('right')
+  }
+  slideButtons (direction, event) {
+    event.stopPropagation()
+    event.preventDefault()
+    this.setState({
+      currentSlidePerc: 0
+    }, () => {
+      if (direction == 'left') {
+        this.slideLeft()
+        // setInterval(() => this.slideLeft(),540)
+      } else {
+        this.slideRight()
+      }
+    })
+  }
   render () {
-    const { left, right } = this.state
+    const { left, center, right } = this.state
     return (
       <div
         style={styles.carouselWrapper}
@@ -155,17 +275,33 @@ class MunduCarousel extends React.PureComponent {
         onTouchMove={this.onTouchMove.bind(this)}
         onTouchEnd={this.onTouchEnd.bind(this)}
       >
-        {this.props.children.slice(left, right + 1).map((child, index) => {
-          return (
-            <div
-              style={{ ...styles.slideWrapper, ...getCurrentStyle(index) }}
-              key={index}
-              ref={`slide_${index}`}
-            >
-              {child}
-            </div>
-          )
-        })}
+        <div
+          style={{ ...styles.slideWrapper, ...getCurrentStyle('left') }}
+          key={'left'}
+          ref={`slide_${left}`}
+        >
+          {this.props.children[left]}
+          {`slide_${left}`}
+        </div>
+
+        <div
+          style={{ ...styles.slideWrapper, ...getCurrentStyle('center') }}
+          key={'center'}
+          ref={`slide_${center}`}
+        >
+          {this.props.children[center]}
+          {`slide_${center}`}
+        </div>
+
+        <div
+          style={{ ...styles.slideWrapper, ...getCurrentStyle('right') }}
+          key={'right'}
+          ref={`slide_${right}`}
+        >
+          {this.props.children[right]}
+          {`slide_${right}`}
+        </div>
+
         {this.props.slideLeft ||
           <div
             style={styles.leftArrow}
@@ -180,6 +316,9 @@ class MunduCarousel extends React.PureComponent {
           >
             {'>>'}
           </div>}
+          <div style={{position:'fixed', bottom: 0, left: 0}}>
+            left: {this.state.left} center: {this.state.center} right: {this.state.right} current: {this.state.currentSlidePerc}
+          </div>
       </div>
     )
   }
