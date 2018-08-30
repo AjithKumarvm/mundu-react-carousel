@@ -1,6 +1,6 @@
 {
   "name": "mundu_react_carousel",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Lightweight carousel for React",
   "main": "lib/index",
   "scripts": {
@@ -10,7 +10,6 @@
     "docs": "webpack-dev-server --mode development",
     "docs:prod": "webpack --mode production"
   },
-  "keywords": [],
   "license": "MIT",
   "peerDependencies": {
     "react": "^16.4.2",
@@ -43,5 +42,15 @@
   "dependencies": {
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
-  }
+  },
+  "keywords": [
+    "react mundu carousel",
+    "react carousel",
+    "lightweight react carousel",
+    "carousel for react",
+    "pure react carousel",
+    "simple react carousel",
+    "react slideshow",
+    "mundu carousel"
+  ]
 }
