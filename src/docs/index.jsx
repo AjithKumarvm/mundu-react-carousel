@@ -4,7 +4,7 @@ import MunduCarousel from '../lib/containers/MunduCarousel'
 
 const Home = () => (
   <div>
-    <MunduCarousel maxWidth={500} height={350} className='name'>
+    <MunduCarousel maxWidth={500} height={350}>
       <img
         ng-src='https://nestaway-houses.akamaized.net/uploads/webp/thumb_large_e65976df-e4c9-4430-9595-696f7236e8a1.webp'
         alt='Sowmya Girish Nest 3 BHK Independent House'
@@ -36,6 +36,33 @@ const Home = () => (
         src='https://nestaway-houses.akamaized.net/uploads/webp/thumb_large_fa24f6c0-2581-4551-a373-8d27959e4adb.webp'
       />
     </MunduCarousel>
+
+    <h2>Props</h2>
+    <pre style={{padding: 20}}>{
+      `{
+        width: '100%', // width can be integer/pixel/percentage
+        maxWidth: 500, // maxWidth should be set for desktop and width for mobile
+        height: 360, // height is mandatory. All child maintaing this height is ideal
+        arrows: true, // show arrows
+        arrowSize: 15, // size of the arrow
+        arrowColor: 'white', // hashcodes/rgba
+        extendedStyles: null, // expects js styles (object) for wrapper
+        className: null, // css class for wrapper
+        dots: true, // show dots(bool)
+        dotStyle: null, // js styles for dots,
+        dotsClass: null, // className for dots wrapper
+        dotClass: null // className for each dot
+      }`}</pre>
+    <h2>Usage</h2>
+    <pre style={{padding: 20}}>
+      {
+        `<MunduCarousel maxWidth={500} height={350}>
+          <children1 />
+          <children2 />
+          <children3 />
+        </MunduCarousel>`
+      }
+    </pre>
   </div>
 )
 

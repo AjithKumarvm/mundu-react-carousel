@@ -17,12 +17,15 @@ let defaultProps = {
   width: '100%',
   maxWidth: 500,
   height: 360,
-  size: 15,
+  arrows: true,
+  arrowSize: 15,
   arrowColor: 'white',
   extendedStyles: null,
   className: null,
   dots: true,
-  dotStyle: null
+  dotStyle: null,
+  dotsClass: null,
+  dotClass: null
 }
 
 class MunduCarousel extends React.Component {
@@ -226,7 +229,7 @@ class MunduCarousel extends React.Component {
       backgroundColor: props.arrowColor
     }
     const {center} = this.state
-    return <div style={styles.dots}>{props.children.map((child, index) => <span key={index} style={{...dotStyle, ...props.dotStyle, opacity: index === center ? 1 : dotStyle.opacity}} onClick={() => this.dotClick(index)} />)}</div>
+    return <div style={styles.dots} className={props.dotsClass}>{props.children.map((child, index) => <span className={props.dotClass} key={index} style={{...dotStyle, ...props.dotStyle, opacity: index === center ? 1 : dotStyle.opacity}} onClick={() => this.dotClick(index)} />)}</div>
   }
   render () {
     const { left, center, right } = this.state
@@ -266,20 +269,20 @@ class MunduCarousel extends React.Component {
         >
           {props.children[right]}
         </div>
-        {props.dots ? this.renderDots(props) : null}
-        {props.slideLeft ||
+        {props.dots &&  this.renderDots(props)}
+        {props.arrows &&
           <div
             style={styles.leftArrow}
             onClick={this.slideButtons.bind(this, 'left')}
           >
-            <ArrowSVG rotate='left' color={props.arrowColor} size={props.size} />
+            <ArrowSVG rotate='left' color={props.arrowColor} size={props.arrowSize} />
           </div>}
-        {props.slideRight ||
+        {props.arrows &&
           <div
             style={styles.rightArrow}
             onClick={this.slideButtons.bind(this, 'right')}
           >
-            <ArrowSVG rotate='right' color={props.arrowColor} size={props.size} />
+            <ArrowSVG rotate='right' color={props.arrowColor} size={props.arrowSize} />
           </div>}
       </div>
     )

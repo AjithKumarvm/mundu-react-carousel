@@ -1,40 +1,39 @@
-# Nestawat React Component Library
+# Mundu React Carousel
+### Very light weight carousel for React Web. No dependencies
 
-## Getting started
+## install
+```bash
+$ npm install mundu-react-carousel --save
+```
 
-Add this to module->rules in webpack
+## Props
 
 ``` 
 {
-        test: /.scss$|.css$/,
-        use: [{
-            loader: "style-loader" // creates style nodes from JS strings
-        }, {
-            loader: "css-loader",
-            options: {
-                    sourceMap: true
-            } // translates CSS into CommonJS
-        }, {
-            loader: "sass-loader",
-            options: {
-              sourceMap: true
-            } // compiles Sass to CSS
-        }]
+        width: '100%', // width can be integer/pixel/percentage
+        maxWidth: 500, // maxWidth should be set for desktop and width for mobile
+        height: 360, // height is mandatory. All child maintaing this height is ideal
+        arrows: true, // show arrows
+        arrowSize: 15, // size of the arrow
+        arrowColor: 'white', // hashcodes/rgba
+        extendedStyles: null, // expects js styles (object) for wrapper
+        className: null, // css class for wrapper
+        dots: true, // show dots(bool)
+        dotStyle: null, // js styles for dots
+        dotsClass: null, // className for dots wrapper
+        dotClass: null // className for each dot
 }
 ```
 
-Install dependencies:
+## Usage
 
-> `npm install --save css-loader node-sass sass-loader style-loader`
+```
+<MunduCarousel maxWidth={500} height={350}>
+    <children1 />
+    <children2 />
+    <children3 />
+</MunduCarousel>
+```
 
-You can use it by:
-
-> `import {FloatingInput} from 'nestaway-component-library';` <br />
-> `<FloatingInput labelName="Enter your name" onChange={onNameChange} />`
-
-
-## What about CSS?
-
-### Separate CSS file
-
-Keep in mind that it is a bad idea to import the css directly into your component file. This requires the webpack style-loader to work, so any user of your package that does not use this loader will be screwed.
+## Author
+Ajith Kumar VM (ajithkumarvm@gmail.com)
