@@ -18,22 +18,6 @@ module.exports = {
           }
         },
         exclude: /node_modules/
-      },
-      {
-        test: /\.scss$|\.css$/,
-        use: [{
-            loader: "style-loader" // creates style nodes from JS strings
-        }, {
-            loader: "css-loader",
-            options: {
-                    sourceMap: true
-            } // translates CSS into CommonJS
-        }, {
-            loader: "sass-loader",
-            options: {
-              sourceMap: true
-            } // compiles Sass to CSS
-        }]
       }
     ]
   },
