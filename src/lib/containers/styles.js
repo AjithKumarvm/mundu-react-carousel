@@ -43,7 +43,8 @@ const styles = {
     display: 'inline-block',
     borderRadius: '50%',
     margin: 4,
-    opacity: .6
+    opacity: .6,
+    cursor: 'pointer'
   }
 }
 
