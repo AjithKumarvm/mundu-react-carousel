@@ -1,57 +1,7 @@
 import React from 'react'
-
-const styles = {
-  carouselWrapper: {
-    width: 500,
-    height: 360,
-    display: 'inline-block',
-    position: 'relative',
-    border: '1px solid #CCC',
-    marginLeft: 200,
-    touchAction: 'none',
-    overflow: 'hidden'
-  },
-  slideWrapper: {
-    position: 'absolute',
-    top: 0,
-    left: 0
-  },
-  leftArrow: {
-    position: 'absolute',
-    top: 200,
-    left: 0,
-    padding: 20,
-    touchAction: 'none'
-  },
-  rightArrow: {
-    position: 'absolute',
-    top: 200,
-    right: 0,
-    padding: 20,
-    touchAction: 'none'
-  }
-}
-const getCurrentStyle = position => {
-  const positions = {
-    left: { transform: 'translateX(-100%)' },
-    center: { transform: 'translateX(0%)' },
-    right: { transform: 'translateX(100%)' }
-  }
-  return positions[position]
-}
-
-const getPosition = element => {
-  let xPosition = 0
-  let yPosition = 0
-
-  while (element) {
-    xPosition += element.offsetLeft - element.scrollLeft + element.clientLeft
-    yPosition += element.offsetTop - element.scrollTop + element.clientTop
-    element = element.offsetParent
-  }
-
-  return { x: xPosition, y: yPosition }
-}
+import styles from './styles'
+import { getCurrentStyle } from './functions'
+import ArrowSVG from '../assets/svg/Arrow' 
 
 Math.easeInOutQuad = function (t, b, c, d) {
   t /= d / 2
@@ -62,8 +12,18 @@ Math.easeInOutQuad = function (t, b, c, d) {
 
 let xDown = null                                                       
 let yDown = null
-let activeAnimationId = null
 let animating = false
+let defaultProps = {
+  width: '100%',
+  maxWidth: 500,
+  height: 360,
+  size: 15,
+  arrowColor: 'white',
+  extendedStyles: null,
+  className: null,
+  dots: true,
+  dotStyle: null
+}
 
 class MunduCarousel extends React.Component {
   constructor (props) {
@@ -79,24 +39,22 @@ class MunduCarousel extends React.Component {
   componentDidMount () {
     window.addEventListener('touchstart', () => null, { passive: false })
     const slides = this.props.children.length
-    let left = 0
-    let center = 1
-    let right = 2
+    let left = slides - 1
+    let center = 0
+    let right = 1
     if (slides === 1) {
       left = 0
       center = 0
       right = 0
     } else if (slides === 2) {
-      left = 0
-      center = 1
-      right = 0
+      left = slides - 1
+      center = 0
+      right = 1
     } else {
-      left = 0
-      center = 1
-      right = 2
+      left = slides - 1
+      center = 0
+      right = 1
     }
-    console.log(slides, 'sliders')
-    console.log(left, center, right)
     this.setState({
       slides,
       left,
@@ -117,24 +75,15 @@ class MunduCarousel extends React.Component {
   }
   onTouchStart (event) {
     this.handleTouchStart(event)
-    const { percToMove } = this.getTouchParams(event)
-    console.log('percToMove', percToMove)
-    // this.setState({
-    //   currentSlidePerc: percToMove
-    // })
+    // const { percToMove } = this.getTouchParams(event)
   }
   onTouchMove (event) {
     this.handleTouchMove(event)
-    const { percToMove } = this.getTouchParams(event)
-    const currentSlidePerc = this.state.currentSlidePerc
-    //this.applyTransforms(percToMove, currentSlidePerc)
+    // const { percToMove } = this.getTouchParams(event)
+    // const currentSlidePerc = this.state.currentSlidePerc
   }
   onTouchEnd (event) {
-    const { percToMove } = this.getTouchParams(event)
-    // this.setState({
-    //   currentSlidePerc: percToMove
-    // })
-    console.log('onTouchEnd', percToMove)
+    // const { percToMove } = this.getTouchParams(event)
   }
   applyTransforms (percToMove, currentSlidePerc) {
     const { left, center, right } = this.state
@@ -184,31 +133,20 @@ class MunduCarousel extends React.Component {
     }
   }
   animateSlide (direction, duration = 300) {
-    const animationId = Date.now()
-    activeAnimationId = animationId
     const to = direction == 'left' ? 100 : -100
     const start = this.state.currentSlidePerc
-    console.log('start', start)
     const change = to - start
     let currentTime = 0
     const increment = 5
     const self = this
     const animateScroll = function () {
       animating = true
-      // if(activeAnimationId !== animationId){
-      //   // early animation exit
-      //   console.log('animation aborted')
-      //   self.applyTransforms(to, 0)
-      //   self.animationEnd(direction)
-      //   return
-      // }
       currentTime += increment
       const val = Math.easeInOutQuad(currentTime, start, change, duration)
       self.applyTransforms(val, 0)
       if (currentTime < duration) {
         setTimeout(animateScroll, increment)
       } else {
-        activeAnimationId = animationId
         self.animationEnd(direction)
         animating = false
       }
@@ -237,7 +175,6 @@ class MunduCarousel extends React.Component {
     }
   }
   animationEnd (direction) {
-    console.log('animationEnd', direction)
     try {
       this.applyTransforms(0, 0)
       this.updatePositions(direction)
@@ -259,66 +196,91 @@ class MunduCarousel extends React.Component {
     }, () => {
       if (direction == 'left') {
         this.slideLeft()
-        // setInterval(() => this.slideLeft(),540)
       } else {
         this.slideRight()
       }
     })
   }
+  getProps () {
+    return {
+      ...defaultProps,
+      ...this.props
+    }
+  }
+  dotClick (index) {
+    const {slides} = this.state
+    const positions = {
+      left: index-1,
+      center: index,
+      right: index+1
+    }
+    this.setState({
+      left: positions.left,
+      center: positions.center,
+      right: positions.right > slides - 1 ? 0 : positions.right
+    })
+  }
+  renderDots (props) {
+    const dotStyle = {
+      ...styles.dot,
+      backgroundColor: props.arrowColor
+    }
+    const {center} = this.state
+    return <div style={styles.dots}>{props.children.map((child, index) => <span key={index} style={{...dotStyle, ...props.dotStyle, opacity: index === center ? 1 : dotStyle.opacity}} onClick={() => this.dotClick(index)} />)}</div>
+  }
   render () {
     const { left, center, right } = this.state
+    const props = this.getProps()
     return (
       <div
-        style={styles.carouselWrapper}
+        style={{...styles.carouselWrapper, width: props.width, maxWidth: props.maxWidth, height: props.height, ...props.extendedStyles}}
         ref='carouselWrapper'
         onTouchStart={this.onTouchStart.bind(this)}
         onTouchMove={this.onTouchMove.bind(this)}
         onTouchEnd={this.onTouchEnd.bind(this)}
+        className={props.className}
       >
         <div
           style={{ ...styles.slideWrapper, ...getCurrentStyle('left') }}
           key={'left'}
           ref={`slide_${left}`}
+          id={`slide_${left}`}
         >
-          {this.props.children[left]}
-          {`slide_${left}`}
+          {props.children[left]}
         </div>
 
         <div
           style={{ ...styles.slideWrapper, ...getCurrentStyle('center') }}
           key={'center'}
           ref={`slide_${center}`}
+          id={`slide_${center}`}
         >
-          {this.props.children[center]}
-          {`slide_${center}`}
+          {props.children[center]}
         </div>
 
         <div
           style={{ ...styles.slideWrapper, ...getCurrentStyle('right') }}
           key={'right'}
           ref={`slide_${right}`}
+          id={`slide_${right}`}
         >
-          {this.props.children[right]}
-          {`slide_${right}`}
+          {props.children[right]}
         </div>
-
-        {this.props.slideLeft ||
+        {props.dots ? this.renderDots(props) : null}
+        {props.slideLeft ||
           <div
             style={styles.leftArrow}
             onClick={this.slideButtons.bind(this, 'left')}
           >
-            {'<<'}
+            <ArrowSVG rotate='left' color={props.arrowColor} size={props.size} />
           </div>}
-        {this.props.slideLeft ||
+        {props.slideRight ||
           <div
             style={styles.rightArrow}
             onClick={this.slideButtons.bind(this, 'right')}
           >
-            {'>>'}
+            <ArrowSVG rotate='right' color={props.arrowColor} size={props.size} />
           </div>}
-          <div style={{position:'fixed', bottom: 0, left: 0}}>
-            left: {this.state.left} center: {this.state.center} right: {this.state.right} current: {this.state.currentSlidePerc}
-          </div>
       </div>
     )
   }
