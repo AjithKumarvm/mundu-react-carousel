@@ -1,6 +1,6 @@
 {
-  "name": "mundu_react_carousel",
-  "version": "0.1.1",
+  "name": "mundu-react-carousel",
+  "version": "0.0.2",
   "description": "A Lightweight carousel for React",
   "main": "lib/index",
   "scripts": {
@@ -50,7 +50,7 @@
     "carousel for react",
     "pure react carousel",
     "simple react carousel",
-    "react slideshow",
+    "react slider",
     "mundu carousel"
   ]
 }

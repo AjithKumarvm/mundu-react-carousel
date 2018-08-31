@@ -21,7 +21,9 @@ $ npm install mundu-react-carousel --save
         dots: true, // show dots(bool)
         dotStyle: null, // js styles for dots
         dotsClass: null, // className for dots wrapper
-        dotClass: null // className for each dot
+        dotClass: null, // className for each dot
+        autoPlay: true, // enable/disable autoplay
+        autoPlayDuration: 3000 // duration of a slide
 }
 ```
 

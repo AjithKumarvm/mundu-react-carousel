@@ -13,6 +13,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
 let xDown = null                                                       
 let yDown = null
 let animating = false
+let autoPlayTimer = null
 let defaultProps = {
   width: '100%',
   maxWidth: 500,
@@ -25,7 +26,9 @@ let defaultProps = {
   dots: true,
   dotStyle: null,
   dotsClass: null,
-  dotClass: null
+  dotClass: null,
+  autoPlay: true,
+  autoPlayDuration: 3000
 }
 
 class MunduCarousel extends React.Component {
@@ -64,6 +67,18 @@ class MunduCarousel extends React.Component {
       center,
       right
     })
+    this.startAutoPlay()
+  }
+  startAutoPlay() {
+    const { autoPlay, autoPlayDuration } = this.getProps()
+    if (!autoPlay) {
+      return
+    }
+    clearTimeout(autoPlayTimer)
+    autoPlayTimer =  setTimeout(() => {
+      this.slideRight()
+      this.startAutoPlay()
+    }, autoPlayDuration)
   }
   getTouchParams (event) {
     const carouselWrapper = this.refs.carouselWrapper
@@ -129,6 +144,7 @@ class MunduCarousel extends React.Component {
           /* right swipe */
           this.slideLeft()
         }
+        this.startAutoPlay()
       }
       /* reset values */
       xDown = null
@@ -202,6 +218,7 @@ class MunduCarousel extends React.Component {
       } else {
         this.slideRight()
       }
+      this.startAutoPlay()
     })
   }
   getProps () {
@@ -222,6 +239,7 @@ class MunduCarousel extends React.Component {
       center: positions.center,
       right: positions.right > slides - 1 ? 0 : positions.right
     })
+    this.startAutoPlay()
   }
   renderDots (props) {
     const dotStyle = {
