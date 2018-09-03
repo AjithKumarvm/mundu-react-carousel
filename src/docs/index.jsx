@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import MunduCarousel from '../lib/containers/MunduCarousel'
+import MunduCarousel from '../lib/index'
 
 const Home = () => (
   <div>
