@@ -135,14 +135,17 @@ class MunduCarousel extends React.Component {
     const { left, center, right } = this.state
     const left_slider = this.refs[`slide_${left}`]
     if (left_slider) {
+      left_slider.style.webkitTransform = `translateX(${percToMove - currentSlidePerc - 100}%)`
       left_slider.style.transform = `translateX(${percToMove - currentSlidePerc - 100}%)`
     }
     const center_slide = this.refs[`slide_${center}`]
     if (center_slide) {
+      center_slide.style.webkitTransform = `translateX(${percToMove - currentSlidePerc}%)`
       center_slide.style.transform = `translateX(${percToMove - currentSlidePerc}%)`
     }
     const right_slider = this.refs[`slide_${right}`]
     if (right_slider) {
+      right_slider.style.webkitTransform = `translateX(${percToMove - currentSlidePerc + 100}%)`
       right_slider.style.transform = `translateX(${percToMove - currentSlidePerc + 100}%)`
     }
   }
