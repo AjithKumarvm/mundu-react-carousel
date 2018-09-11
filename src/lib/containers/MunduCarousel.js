@@ -28,7 +28,8 @@ let defaultProps = {
   dotsClass: null,
   dotClass: null,
   autoPlay: true,
-  autoPlayDuration: 3000
+  autoPlayDuration: 3000,
+  startPosition: 0
 }
 
 class MunduCarousel extends React.Component {
@@ -66,8 +67,35 @@ class MunduCarousel extends React.Component {
       left,
       center,
       right
+    }, () => {
+      this.fixStartPosition(() => {
+        this.startAutoPlay()
+      })
     })
-    this.startAutoPlay()
+  }
+  fixStartPosition(callback) {
+    let startPosition = this.props.startPosition || defaultProps.startPosition
+    let {left, center, right, slides} = this.state
+    if(startPosition < 0 || startPosition > slides -1) {
+      console.error('Mundu Carousel: Invalid Start Position', startPosition)
+      startPosition = 0
+    }
+    center = startPosition
+    left = startPosition - 1
+    right = startPosition + 1
+    if(left < 0) {
+      left = slides - 1
+    }
+    if(right > slides - 1) {
+      right = 0
+    }
+    this.setState({
+      left,
+      center,
+      right
+    }, () => {
+      callback()
+    })
   }
   startAutoPlay() {
     const { autoPlay, autoPlayDuration } = this.getProps()

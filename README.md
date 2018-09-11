@@ -30,6 +30,7 @@ $ npm install mundu-react-carousel --save
 ## Usage
 
 ```
+import MunduCarousel from 'mundu-react-carousel';
 <MunduCarousel maxWidth={500} height={350}>
     <children1 />
     <children2 />

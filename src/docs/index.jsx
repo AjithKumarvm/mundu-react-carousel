@@ -4,7 +4,7 @@ import MunduCarousel from '../lib/index'
 
 const Home = () => (
   <div>
-    <MunduCarousel maxWidth={500} height={350}>
+    <MunduCarousel maxWidth={500} height={350} startPosition={5}>
       <img
         ng-src='https://nestaway-houses.akamaized.net/uploads/webp/thumb_large_e65976df-e4c9-4430-9595-696f7236e8a1.webp'
         alt='Sowmya Girish Nest 3 BHK Independent House'
@@ -53,7 +53,8 @@ const Home = () => (
         dotsClass: null, // className for dots wrapper
         dotClass: null, // className for each dot
         autoPlay: true, // enable/disable autoplay
-        autoPlayDuration: 3000 // duration of a slide
+        autoPlayDuration: 3000, // duration of a slide
+        startPosition: 0 // preset the starting slide
       }`}</pre>
     <h2>Usage</h2>
     <pre style={{padding: 20}}>
