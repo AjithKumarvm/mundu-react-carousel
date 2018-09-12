@@ -6,6 +6,7 @@ const styles = {
     overflow: 'hidden'
   },
   slideWrapper: {
+    width: '100%',
     position: 'absolute',
     top: 0,
     left: 0

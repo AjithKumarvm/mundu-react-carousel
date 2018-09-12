@@ -22,11 +22,11 @@ let defaultProps = {
   arrowSize: 15,
   arrowColor: 'white',
   extendedStyles: null,
-  className: null,
+  className: '',
   dots: true,
   dotStyle: null,
-  dotsClass: null,
-  dotClass: null,
+  dotsClass: '',
+  dotClass: '',
   autoPlay: true,
   autoPlayDuration: 3000,
   startPosition: 0
@@ -278,7 +278,8 @@ class MunduCarousel extends React.Component {
       backgroundColor: props.arrowColor
     }
     const {center} = this.state
-    return <div style={styles.dots} className={props.dotsClass}>{props.children.map((child, index) => <span className={props.dotClass} key={index} style={{...dotStyle, ...props.dotStyle, opacity: index === center ? 1 : dotStyle.opacity}} onClick={() => this.dotClick(index)} />)}</div>
+    const activeClass = 'dot active '
+    return <div style={styles.dots} className={props.dotsClass}>{props.children.map((child, index) => <span className={`${index === center ? activeClass : 'dot '}${props.dotClass}`} key={index} style={{...dotStyle, ...props.dotStyle, opacity: index === center ? 1 : dotStyle.opacity}} onClick={() => this.dotClick(index)} />)}</div>
   }
   render () {
     const { left, center, right } = this.state
