@@ -253,10 +253,18 @@ class MunduCarousel extends React.Component {
     })
   }
   getProps () {
-    return {
+    let allProps = {
       ...defaultProps,
       ...this.props
     }
+    allProps.children =  React.Children.map(allProps.children, (child, index) => {
+      return React.cloneElement(child, {
+        onClick: () => {
+          allProps.onClick && allProps.onClick(index)
+        }
+      })
+    })
+    return allProps
   }
   dotClick (index) {
     const {slides} = this.state
