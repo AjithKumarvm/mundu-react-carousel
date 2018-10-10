@@ -54,7 +54,8 @@ const Home = () => (
         dotClass: null, // className for each dot
         autoPlay: true, // enable/disable autoplay
         autoPlayDuration: 3000, // duration of a slide
-        startPosition: 0 // preset the starting slide
+        startPosition: 0, // preset the starting slide
+        onClick: // gives the index of the current slide
       }`}</pre>
     <h2>Usage</h2>
     <pre style={{padding: 20}}>

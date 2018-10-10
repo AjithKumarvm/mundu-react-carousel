@@ -23,7 +23,8 @@ $ npm install mundu-react-carousel --save
         dotsClass: null, // className for dots wrapper
         dotClass: null, // className for each dot
         autoPlay: true, // enable/disable autoplay
-        autoPlayDuration: 3000 // duration of a slide
+        autoPlayDuration: 3000, // duration of a slide
+        onClick: // gives the index of the current slide
 }
 ```
 

@@ -261,6 +261,11 @@ class MunduCarousel extends React.Component {
       return React.cloneElement(child, {
         onClick: () => {
           allProps.onClick && allProps.onClick(index)
+        },
+        style: { // copied the parent dimentions to children also
+          width: allProps.width,
+          maxWidth: allProps.maxWidth,
+          height: allProps.height
         }
       })
     })
