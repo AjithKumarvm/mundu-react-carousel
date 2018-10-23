@@ -29,7 +29,8 @@ let defaultProps = {
   dotClass: '',
   autoPlay: true,
   autoPlayDuration: 3000,
-  startPosition: 0
+  startPosition: 0,
+  swipePixels: 50
 }
 
 class MunduCarousel extends React.Component {
@@ -163,7 +164,8 @@ class MunduCarousel extends React.Component {
 
     const xDiff = xDown - xUp
     const yDiff = yDown - yUp
-    if (Math.abs(xDiff) + Math.abs(yDiff) > 150) {
+    const { swipePixels } = this.getProps()
+    if (Math.abs(xDiff) + Math.abs(yDiff) > swipePixels) {
       // to deal with to short swipes
 
       if (Math.abs(xDiff) > Math.abs(yDiff)) {
