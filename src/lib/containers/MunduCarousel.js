@@ -30,7 +30,8 @@ let defaultProps = {
   autoPlay: true,
   autoPlayDuration: 3000,
   startPosition: 0,
-  swipePixels: 50
+  swipePixels: 50,
+  slideTime: 300
 }
 
 class MunduCarousel extends React.Component {
@@ -184,7 +185,8 @@ class MunduCarousel extends React.Component {
       yDown = null
     }
   }
-  animateSlide (direction, duration = 300) {
+  animateSlide (direction) {
+    const { slideTime } = this.getProps()
     const to = direction == 'left' ? 100 : -100
     const start = this.state.currentSlidePerc
     const change = to - start
@@ -194,9 +196,9 @@ class MunduCarousel extends React.Component {
     const animateScroll = function () {
       animating = true
       currentTime += increment
-      const val = Math.easeInOutQuad(currentTime, start, change, duration)
+      const val = Math.easeInOutQuad(currentTime, start, change, slideTime)
       self.applyTransforms(val, 0)
-      if (currentTime < duration) {
+      if (currentTime < slideTime) {
         setTimeout(animateScroll, increment)
       } else {
         self.animationEnd(direction)
