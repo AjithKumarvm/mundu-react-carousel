@@ -31,7 +31,8 @@ let defaultProps = {
   autoPlayDuration: 3000,
   startPosition: 0,
   swipePixels: 50,
-  slideTime: 300
+  slideTime: 300,
+  rotateSlides: true
 }
 
 class MunduCarousel extends React.Component {
@@ -237,9 +238,15 @@ class MunduCarousel extends React.Component {
     }
   }
   slideLeft () {
+    const {rotateSlides} = this.getProps()
+    if(!rotateSlides && this.state.center === 0) {
+    }
     !animating && this.animateSlide('left')
   }
   slideRight () {
+    const {rotateSlides} = this.getProps()
+    if(!rotateSlides && this.state.right === 0) {
+    }
     !animating && this.animateSlide('right')
   }
   slideButtons (direction, event) {
@@ -337,14 +344,14 @@ class MunduCarousel extends React.Component {
           {props.children[right]}
         </div>
         {props.dots &&  this.renderDots(props)}
-        {props.arrows &&
+        {props.arrows && (!props.rotateSlides && center !== 0) &&
           <div
             style={styles.leftArrow}
             onClick={this.slideButtons.bind(this, 'left')}
           >
             <ArrowSVG rotate='left' color={props.arrowColor} size={props.arrowSize} />
           </div>}
-        {props.arrows &&
+        {props.arrows && (!props.rotateSlides && right !== 0) &&
           <div
             style={styles.rightArrow}
             onClick={this.slideButtons.bind(this, 'right')}

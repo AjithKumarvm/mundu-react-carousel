@@ -26,7 +26,8 @@ $ npm install mundu-react-carousel --save
         autoPlayDuration: 3000, // duration of a slide
         onClick: (index) => {}, // gives the index of the current slide
         swipePixels: 50, // sensitivity to swipe in px
-        slideTime: 300 // Time taken to slide in ms
+        slideTime: 300, // Time taken to slide in ms
+        rotateSlides: true // set false to block the transition from end to start
 }
 ```
 
