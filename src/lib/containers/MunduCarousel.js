@@ -32,7 +32,8 @@ let defaultProps = {
   startPosition: 0,
   swipePixels: 50,
   slideTime: 300,
-  rotateSlides: true
+  rotateSlides: true,
+  onSlided: null
 }
 
 class MunduCarousel extends React.Component {
@@ -233,6 +234,8 @@ class MunduCarousel extends React.Component {
     try {
       this.applyTransforms(0, 0)
       this.updatePositions(direction)
+      const {onSlided} = this.getProps()
+      onSlided && onSlided(this.state.center)
     } catch (e) {
       console.error(e)
     }

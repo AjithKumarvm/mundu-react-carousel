@@ -27,7 +27,8 @@ $ npm install mundu-react-carousel --save
         onClick: (index) => {}, // gives the index of the current slide
         swipePixels: 50, // sensitivity to swipe in px
         slideTime: 300, // Time taken to slide in ms
-        rotateSlides: true // set false to block the transition from end to start
+        rotateSlides: true, // set false to block the transition from end to start
+        onSlided: (index) => {} // triggered when slide transition is completed
 }
 ```
 
