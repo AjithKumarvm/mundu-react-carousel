@@ -296,6 +296,9 @@ class MunduCarousel extends React.Component {
       left: positions.left,
       center: positions.center,
       right: positions.right > slides - 1 ? 0 : positions.right
+    }, () => {
+      const {onSlided} = this.getProps()
+      onSlided && onSlided(this.state.center)
     })
     this.startAutoPlay()
   }
@@ -311,6 +314,14 @@ class MunduCarousel extends React.Component {
   render () {
     const { left, center, right } = this.state
     const props = this.getProps()
+    let showLeftArrow = props.arrows
+    if(showLeftArrow && !props.rotateSlides && center === 0) {
+      showLeftArrow = false
+    }
+    let showRightArrow = props.arrows
+    if(showRightArrow && !props.rotateSlides && right === 0) {
+      showRightArrow = false
+    }
     return (
       <div
         style={{...styles.carouselWrapper, width: props.width, maxWidth: props.maxWidth, height: props.height, ...props.extendedStyles}}
@@ -324,7 +335,6 @@ class MunduCarousel extends React.Component {
           style={{ ...styles.slideWrapper, ...getCurrentStyle('left') }}
           key={'left'}
           ref={`slide_${left}`}
-          id={`slide_${left}`}
         >
           {props.children[left]}
         </div>
@@ -333,7 +343,6 @@ class MunduCarousel extends React.Component {
           style={{ ...styles.slideWrapper, ...getCurrentStyle('center') }}
           key={'center'}
           ref={`slide_${center}`}
-          id={`slide_${center}`}
         >
           {props.children[center]}
         </div>
@@ -342,19 +351,18 @@ class MunduCarousel extends React.Component {
           style={{ ...styles.slideWrapper, ...getCurrentStyle('right') }}
           key={'right'}
           ref={`slide_${right}`}
-          id={`slide_${right}`}
         >
           {props.children[right]}
         </div>
         {props.dots &&  this.renderDots(props)}
-        {props.arrows && (!props.rotateSlides && center !== 0) &&
+        {showLeftArrow &&
           <div
             style={styles.leftArrow}
             onClick={this.slideButtons.bind(this, 'left')}
           >
             <ArrowSVG rotate='left' color={props.arrowColor} size={props.arrowSize} />
           </div>}
-        {props.arrows && (!props.rotateSlides && right !== 0) &&
+        {showRightArrow &&
           <div
             style={styles.rightArrow}
             onClick={this.slideButtons.bind(this, 'right')}
