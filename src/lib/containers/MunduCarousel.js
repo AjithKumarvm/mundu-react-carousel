@@ -33,7 +33,8 @@ let defaultProps = {
   swipePixels: 50,
   slideTime: 300,
   rotateSlides: true,
-  onSlided: null
+  onSlided: null,
+  dotsWithArrows: false
 }
 
 class MunduCarousel extends React.Component {
@@ -302,18 +303,43 @@ class MunduCarousel extends React.Component {
     })
     this.startAutoPlay()
   }
-  renderDots (props) {
+  renderDots ({props, dotsWithArrows}) {
     const dotStyle = {
       ...styles.dot,
       backgroundColor: props.arrowColor
     }
     const {center} = this.state
     const activeClass = 'dot active '
-    return <div style={styles.dots} className={props.dotsClass}>{props.children.map((child, index) => <span className={`${index === center ? activeClass : 'dot '}${props.dotClass}`} key={index} style={{...dotStyle, ...props.dotStyle, opacity: index === center ? 1 : dotStyle.opacity}} onClick={() => this.dotClick(index)} />)}</div>
+    return <div style={styles.dots} className={props.dotsClass}>
+      {dotsWithArrows && this.renderArrows({props, direction: 'left'})}
+      {
+        props.children.map((child, index) => 
+          <span className={`${index === center ? activeClass : 'dot '}${props.dotClass}`} key={index} style={{...dotStyle, ...props.dotStyle, opacity: index === center ? 1 : dotStyle.opacity}} onClick={() => this.dotClick(index)} />
+        )
+      }
+      {dotsWithArrows && this.renderArrows({props, direction: 'right'})}
+    </div>
   }
-  render () {
-    const { left, center, right } = this.state
-    const props = this.getProps()
+  renderArrows ({direction, props}) {
+    const { showLeftArrow, showRightArrow } = this.showArrowsCheck({props})
+    if (direction === 'left') {
+      return <div
+        style={props.dotsWithArrows ? styles.inlineBlockArrows : styles.leftArrow}
+        onClick={showLeftArrow && this.slideButtons.bind(this, 'left')}
+      >
+        <ArrowSVG style={{visibility: showLeftArrow ? 'visible' : 'hidden'}} rotate='left' color={props.arrowColor} size={props.arrowSize} />
+      </div>
+    } else {
+      return <div
+        style={props.dotsWithArrows ? styles.inlineBlockArrows : styles.leftArrow}
+        onClick={showRightArrow && this.slideButtons.bind(this, 'right')}
+      >
+        <ArrowSVG style={{visibility : showRightArrow ? 'visible' : 'hidden'}} rotate='right' color={props.arrowColor} size={props.arrowSize} />
+      </div>
+    }
+  }
+  showArrowsCheck ({props}) {
+    const { center, right } = this.state
     let showLeftArrow = props.arrows
     if(showLeftArrow && !props.rotateSlides && center === 0) {
       showLeftArrow = false
@@ -322,6 +348,15 @@ class MunduCarousel extends React.Component {
     if(showRightArrow && !props.rotateSlides && right === 0) {
       showRightArrow = false
     }
+    return {
+      showLeftArrow,
+      showRightArrow
+    }
+  }
+  render () {
+    const { left, center, right } = this.state
+    const props = this.getProps()
+    const { showLeftArrow, showRightArrow } = this.showArrowsCheck({props})
     return (
       <div
         style={{...styles.carouselWrapper, width: props.width, maxWidth: props.maxWidth, height: props.height, ...props.extendedStyles}}
@@ -354,21 +389,11 @@ class MunduCarousel extends React.Component {
         >
           {props.children[right]}
         </div>
-        {props.dots &&  this.renderDots(props)}
-        {showLeftArrow &&
-          <div
-            style={styles.leftArrow}
-            onClick={this.slideButtons.bind(this, 'left')}
-          >
-            <ArrowSVG rotate='left' color={props.arrowColor} size={props.arrowSize} />
-          </div>}
-        {showRightArrow &&
-          <div
-            style={styles.rightArrow}
-            onClick={this.slideButtons.bind(this, 'right')}
-          >
-            <ArrowSVG rotate='right' color={props.arrowColor} size={props.arrowSize} />
-          </div>}
+        {props.dots && this.renderDots({props, dotsWithArrows: props.dotsWithArrows})}
+        {showLeftArrow && !props.dotsWithArrows &&
+          this.renderArrows({direction: 'left', props})}
+        {showRightArrow && !props.dotsWithArrows &&
+          this.renderArrows({direction: 'right', props})}
       </div>
     )
   }

@@ -4,7 +4,7 @@ import MunduCarousel from '../lib/index'
 
 const Home = () => (
   <div>
-    <MunduCarousel maxWidth={500} width='100%' height={350} autoPlay={false} onClick={(index) => {console.log('click', index)}} swipePixels={10} slideTime={100} rotateSlides={false} onSlided={(index) => {console.log('slided', index)}}>
+    <MunduCarousel maxWidth={500} width='100%' height={350} autoPlay={false} onClick={(index) => {console.log('click', index)}} swipePixels={10} slideTime={100} rotateSlides={false} onSlided={(index) => {console.log('slided', index)}} dotsWithArrows>
       <img
         ng-src='https://nestaway-houses.akamaized.net/uploads/webp/thumb_large_e65976df-e4c9-4430-9595-696f7236e8a1.webp'
         alt='Sowmya Girish Nest 3 BHK Independent House'
@@ -59,7 +59,8 @@ const Home = () => (
         swipePixels: 50, // sensitivity to swipe in px
         slideTime: 300, // Time taken to slide in ms
         rotateSlides: true, // set false to block the transition from end to start
-        onSlided: (index) => {} // triggered when slide transition is completed
+        onSlided: (index) => {}, // triggered when slide transition is completed
+        dotsWithArrows: true // shows arrows near the dots
       }`}</pre>
     <h2>Usage</h2>
     <pre style={{padding: 20}}>

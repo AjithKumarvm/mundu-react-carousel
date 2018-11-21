@@ -15,11 +15,11 @@ const styleMap = {
   }
 }
 
-const Arrow = ({ size = 10, color = '#282828', rotate = 'down' }) => (
+const Arrow = ({ size = 10, color = '#282828', rotate = 'down', style = null }) => (
   <svg
     width={size}
     viewBox='0 0 10 6'
-    style={styleMap[rotate]}
+    style={{...styleMap[rotate], ...style}}
   >
     <g stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
       <g

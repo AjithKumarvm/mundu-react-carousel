@@ -45,7 +45,14 @@ const styles = {
     borderRadius: '50%',
     margin: 4,
     opacity: .6,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    verticalAlign: 'middle'
+  },
+  inlineBlockArrows: {
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    cursor: 'pointer',
+    padding: 10
   }
 }
 

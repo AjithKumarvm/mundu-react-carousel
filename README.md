@@ -28,7 +28,8 @@ $ npm install mundu-react-carousel --save
         swipePixels: 50, // sensitivity to swipe in px
         slideTime: 300, // Time taken to slide in ms
         rotateSlides: true, // set false to block the transition from end to start
-        onSlided: (index) => {} // triggered when slide transition is completed
+        onSlided: (index) => {}, // triggered when slide transition is completed
+        dotsWithArrows: true // shows arrows near the dots
 }
 ```
 
