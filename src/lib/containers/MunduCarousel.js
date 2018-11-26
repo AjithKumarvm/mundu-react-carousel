@@ -331,7 +331,7 @@ class MunduCarousel extends React.Component {
       </div>
     } else {
       return <div
-        style={props.dotsWithArrows ? styles.inlineBlockArrows : styles.leftArrow}
+        style={props.dotsWithArrows ? styles.inlineBlockArrows : styles.rightArrow}
         onClick={showRightArrow && this.slideButtons.bind(this, 'right')}
       >
         <ArrowSVG style={{visibility : showRightArrow ? 'visible' : 'hidden'}} rotate='right' color={props.arrowColor} size={props.arrowSize} />
