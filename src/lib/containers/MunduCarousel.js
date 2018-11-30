@@ -10,33 +10,6 @@ Math.easeInOutQuad = function (t, b, c, d) {
   return -c / 2 * (t * (t - 2) - 1) + b
 }
 
-let xDown = null                                                       
-let yDown = null
-let animating = false
-let autoPlayTimer = null
-let defaultProps = {
-  width: '100%',
-  maxWidth: 500,
-  height: 360,
-  arrows: true,
-  arrowSize: 15,
-  arrowColor: 'white',
-  extendedStyles: null,
-  className: '',
-  dots: true,
-  dotStyle: null,
-  dotsClass: '',
-  dotClass: '',
-  autoPlay: true,
-  autoPlayDuration: 3000,
-  startPosition: 0,
-  swipePixels: 50,
-  slideTime: 300,
-  rotateSlides: true,
-  onSlided: null,
-  dotsWithArrows: false
-}
-
 class MunduCarousel extends React.Component {
   constructor (props) {
     super(props)
@@ -47,7 +20,34 @@ class MunduCarousel extends React.Component {
       currentSlidePerc: 0,
       slides: 0
     }
+    this.xDown = null                                                       
+    this.yDown = null
+    this.animating = false
+    this.autoPlayTimer = null
+    this.defaultProps = {
+      width: '100%',
+      maxWidth: 500,
+      height: 360,
+      arrows: true,
+      arrowSize: 15,
+      arrowColor: 'white',
+      extendedStyles: null,
+      className: '',
+      dots: true,
+      dotStyle: null,
+      dotsClass: '',
+      dotClass: '',
+      autoPlay: true,
+      autoPlayDuration: 3000,
+      startPosition: 0,
+      swipePixels: 50,
+      slideTime: 300,
+      rotateSlides: true,
+      onSlided: null,
+      dotsWithArrows: false
+    }
   }
+  
   componentDidMount () {
     window.addEventListener('touchstart', () => null, { passive: false })
     const slides = this.props.children.length
@@ -79,7 +79,7 @@ class MunduCarousel extends React.Component {
     })
   }
   fixStartPosition(callback) {
-    let startPosition = this.props.startPosition || defaultProps.startPosition
+    let startPosition = this.props.startPosition || this.defaultProps.startPosition
     let {left, center, right, slides} = this.state
     if(startPosition < 0 || startPosition > slides -1) {
       console.error('Mundu Carousel: Invalid Start Position', startPosition)
@@ -107,8 +107,8 @@ class MunduCarousel extends React.Component {
     if (!autoPlay) {
       return
     }
-    clearTimeout(autoPlayTimer)
-    autoPlayTimer =  setTimeout(() => {
+    clearTimeout(this.autoPlayTimer)
+    this.autoPlayTimer =  setTimeout(() => {
       this.slideRight()
       this.startAutoPlay()
     }, autoPlayDuration)
@@ -155,19 +155,19 @@ class MunduCarousel extends React.Component {
     }
   }
   handleTouchStart (evt) {
-    xDown = evt.touches[0].clientX
-    yDown = evt.touches[0].clientY
+    this.xDown = evt.touches[0].clientX
+    this.yDown = evt.touches[0].clientY
   }
   handleTouchMove (evt) {
-    if (!xDown || !yDown) {
+    if (!this.xDown || !this.yDown) {
       return
     }
 
     const xUp = evt.touches[0].clientX
     const yUp = evt.touches[0].clientY
 
-    const xDiff = xDown - xUp
-    const yDiff = yDown - yUp
+    const xDiff = this.xDown - xUp
+    const yDiff = this.yDown - yUp
     const { swipePixels } = this.getProps()
     if (Math.abs(xDiff) + Math.abs(yDiff) > swipePixels) {
       // to deal with to short swipes
@@ -184,8 +184,8 @@ class MunduCarousel extends React.Component {
         this.startAutoPlay()
       }
       /* reset values */
-      xDown = null
-      yDown = null
+      this.xDown = null
+      this.yDown = null
     }
   }
   animateSlide (direction) {
@@ -196,8 +196,8 @@ class MunduCarousel extends React.Component {
     let currentTime = 0
     const increment = 5
     const self = this
-    const animateScroll = function () {
-      animating = true
+    const animateScroll = () => {
+      this.animating = true
       currentTime += increment
       const val = Math.easeInOutQuad(currentTime, start, change, slideTime)
       self.applyTransforms(val, 0)
@@ -205,7 +205,7 @@ class MunduCarousel extends React.Component {
         setTimeout(animateScroll, increment)
       } else {
         self.animationEnd(direction)
-        animating = false
+        this.animating = false
       }
     }
     animateScroll()
@@ -245,13 +245,13 @@ class MunduCarousel extends React.Component {
     const {rotateSlides} = this.getProps()
     if(!rotateSlides && this.state.center === 0) {
     }
-    !animating && this.animateSlide('left')
+    !this.animating && this.animateSlide('left')
   }
   slideRight () {
     const {rotateSlides} = this.getProps()
     if(!rotateSlides && this.state.right === 0) {
     }
-    !animating && this.animateSlide('right')
+    !this.animating && this.animateSlide('right')
   }
   slideButtons (direction, event) {
     event.stopPropagation()
@@ -269,7 +269,7 @@ class MunduCarousel extends React.Component {
   }
   getProps () {
     let allProps = {
-      ...defaultProps,
+      ...this.defaultProps,
       ...this.props
     }
     allProps.children =  React.Children.map(allProps.children, (child, index) => {
