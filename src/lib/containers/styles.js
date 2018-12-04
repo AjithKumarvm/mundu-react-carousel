@@ -2,7 +2,7 @@ const styles = {
   carouselWrapper: {
     display: 'inline-block',
     position: 'relative',
-    touchAction: 'none',
+    touchAction: 'pan-y',
     overflow: 'hidden'
   },
   slideWrapper: {
