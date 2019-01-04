@@ -244,12 +244,14 @@ class MunduCarousel extends React.Component {
   slideLeft () {
     const {rotateSlides} = this.getProps()
     if(!rotateSlides && this.state.center === 0) {
+      return
     }
     !this.animating && this.animateSlide('left')
   }
   slideRight () {
     const {rotateSlides} = this.getProps()
     if(!rotateSlides && this.state.right === 0) {
+      return
     }
     !this.animating && this.animateSlide('right')
   }
