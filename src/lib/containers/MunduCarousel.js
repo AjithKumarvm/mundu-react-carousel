@@ -24,28 +24,6 @@ class MunduCarousel extends React.Component {
     this.yDown = null
     this.animating = false
     this.autoPlayTimer = null
-    this.defaultProps = {
-      width: '100%',
-      maxWidth: 500,
-      height: 360,
-      arrows: true,
-      arrowSize: 15,
-      arrowColor: 'white',
-      extendedStyles: null,
-      className: '',
-      dots: true,
-      dotStyle: null,
-      dotsClass: '',
-      dotClass: '',
-      autoPlay: true,
-      autoPlayDuration: 3000,
-      startPosition: 0,
-      swipePixels: 50,
-      slideTime: 300,
-      rotateSlides: true,
-      onSlided: null,
-      dotsWithArrows: false
-    }
   }
   
   componentDidMount () {
@@ -79,7 +57,7 @@ class MunduCarousel extends React.Component {
     })
   }
   fixStartPosition(callback) {
-    let startPosition = this.props.startPosition || this.defaultProps.startPosition
+    const {startPosition} = this.getProps()
     let {left, center, right, slides} = this.state
     if(startPosition < 0 || startPosition > slides -1) {
       console.error('Mundu Carousel: Invalid Start Position', startPosition)
@@ -270,8 +248,30 @@ class MunduCarousel extends React.Component {
     })
   }
   getProps () {
+    const defaultProps = {
+      width: '100%',
+      maxWidth: 500,
+      height: 360,
+      arrows: true,
+      arrowSize: 15,
+      arrowColor: 'white',
+      extendedStyles: null,
+      className: '',
+      dots: true,
+      dotStyle: null,
+      dotsClass: '',
+      dotClass: '',
+      autoPlay: true,
+      autoPlayDuration: 3000,
+      startPosition: 0,
+      swipePixels: 50,
+      slideTime: 300,
+      rotateSlides: true,
+      onSlided: null,
+      dotsWithArrows: false
+    }
     let allProps = {
-      ...this.defaultProps,
+      ...defaultProps,
       ...this.props
     }
     allProps.children =  React.Children.map(allProps.children, (child, index) => {
