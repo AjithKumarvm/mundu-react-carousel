@@ -40,7 +40,7 @@ const Home = () => (
     <h2>Props</h2>
     <pre style={{padding: 20}}>{
       `{
-        width: '100%', // width can be integer/pixel/percentage
+        width: '100%', // width can be integer/pixel/percentage.
         maxWidth: 500, // maxWidth should be set for desktop and width for mobile
         height: 360, // height is mandatory. All child maintaing this height is ideal
         arrows: true, // show arrows

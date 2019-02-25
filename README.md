@@ -6,6 +6,10 @@
 $ npm install mundu-react-carousel --save
 ```
 
+## Demo
+[https://ajithkumarvm.github.io/](https://ajithkumarvm.github.io/)
+
+
 ## Props
 
 ``` 
