@@ -24,6 +24,8 @@ class MunduCarousel extends React.Component {
     this.yDown = null
     this.animating = false
     this.autoPlayTimer = null
+    this.left = this.triggerLeft.bind(this)
+    this.right = this.triggerRight.bind(this)
   }
   
   componentDidMount () {
@@ -55,6 +57,14 @@ class MunduCarousel extends React.Component {
         this.startAutoPlay()
       })
     })
+  }
+  triggerLeft() {
+    this.slideLeft()
+    this.startAutoPlay()
+  }
+  triggerRight() {
+    this.slideRight()
+    this.startAutoPlay()
   }
   fixStartPosition(callback) {
     const {startPosition} = this.getProps()
