@@ -48,5 +48,9 @@ import MunduCarousel from 'mundu-react-carousel';
 </MunduCarousel>
 ```
 
+## Note
+
+If images in slides are flickering after sliding. Set image file header ```Cache-Control: max-age=1535272``` in your cdn or files server.
+
 ## Author
 Ajith Kumar VM (ajithkumarvm@gmail.com)
