@@ -48,9 +48,13 @@ import MunduCarousel from 'mundu-react-carousel';
 </MunduCarousel>
 ```
 
-## Note
+## Tip 1: Swipe on mobile
 
-If images in slides are flickering after sliding. Set image file header ```Cache-Control: max-age=1535272``` in your cdn or files server.
+Swipe will work on mobile browser or check mobile view in Chrome dev tools.
+
+## Tip 2: Image Flickering issue
+
+If images in slides are flickering after sliding. Set image file header Cache-Control: max-age=1535272 in your cdn or files server. Or host your images in https://imgur.com
 
 ## Author
 Ajith Kumar VM (ajithkumarvm@gmail.com)

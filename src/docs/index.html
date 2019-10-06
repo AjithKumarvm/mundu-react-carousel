@@ -9,27 +9,81 @@
   <title>Mundu React Caraousel</title>
   <style>
     body {
-      margin:0;
-      padding:0;
-      border:0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-family: sans-serif;
+      background: linear-gradient(#f3f3f3, #f5f5f5);
     }
-    .container{
+
+    .header {
+      width: 100%;
+      display: inline-block;
+      background: rgb(240, 240, 240);
+      box-sizing: border-box;
+      padding: 0 10px;
+      box-shadow: 0px 1px 6px 0px #cccccca6;
+      text-align: center;
+    }
+
+    .colored {
+      width: 100%;
+      text-align: center;
+      line-height: 1;
+      background: linear-gradient(#ba11c5, #ca0a6b);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .headerSubText {
+      color: #9e9b9b;
+      text-shadow: 1px 1px 0px #fff;
+    }
+
+    .container {
       width: 100%;
       max-width: 1024px;
       margin: auto;
       float: none;
+      padding: 0 10px;
+      box-sizing: border-box;
     }
-    .carouselArea{
+
+    .carouselArea {
       width: 100%;
       display: inline-block;
       text-align: center;
+      padding: 50px 10px;
+      box-shadow: inset 0px 0px 20px 20px #ada9a933;
+      box-sizing: border-box;
     }
-    .code{
+
+    .carousel {
+      box-shadow: 0px 0px 20px 20px #ada9a933;
+      border-radius: 10px;
+    }
+
+    .code {
       background-color: #543030;
       border: 2px solid #282828;
       color: white;
       padding: 20px;
       overflow-x: auto;
+      box-shadow: inset 0px 0px 20px 0px #311818;
+      border-radius: 10px;
+    }
+
+    .para {
+      background-color: #ececec;
+      color: rgb(0, 0, 0);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      padding-top: 20px;
     }
   </style>
 </head>
