@@ -7,7 +7,7 @@ $ npm install mundu-react-carousel --save
 ```
 
 ## Demo
-[https://ajithkumarvm.github.io/](https://ajithkumarvm.github.io/)
+[https://ajithkumarvm.github.io/mundu-react-carousel/](https://ajithkumarvm.github.io/mundu-react-carousel/)
 
 
 ## Props
@@ -16,17 +16,17 @@ $ npm install mundu-react-carousel --save
 {
         width: '100%', // width can be integer/pixel/percentage
         maxWidth: 500, // maxWidth should be set for desktop and width for mobile
-        height: 360, // height is mandatory. All child maintaing this height is ideal
+        height: 360, // height is mandatory. All child maintaining this height is ideal
         arrows: true, // show arrows
         arrowSize: 15, // size of the arrow
-        arrowColor: 'white', // hashcodes/rgba
+        arrowColor: 'white', // hash codes/rgba
         extendedStyles: null, // expects js styles (object) for wrapper
         className: null, // css class for wrapper
         dots: true, // show dots(bool)
         dotStyle: null, // js styles for dots
         dotsClass: null, // className for dots wrapper
         dotClass: null, // className for each dot
-        autoPlay: true, // enable/disable autoplay
+        autoPlay: true, // enable/disable auto play
         autoPlayDuration: 3000, // duration of a slide
         onClick: (index) => {}, // gives the index of the current slide
         swipePixels: 50, // sensitivity to swipe in px
