@@ -56,28 +56,28 @@ class Home extends React.Component {
             }}
           >
             <img
-              alt='Fox caught in action under the rain'
-              src='https://i.imgur.com/vt1Bu3m.jpg'
+              alt='Colors'
+              src='https://images.freeimages.com/images/large-previews/753/light-effects-14-1200296.jpg'
             />
             <img
-              alt='Hummingbird'
-              src='https://i.imgur.com/dma96XC.jpg'
+              alt='Bottle'
+              src='https://images.freeimages.com/images/large-previews/a62/pour-1187721.jpg'
             />
             <img
-              alt={`Moving at a snail's pace`}
-              src='https://i.imgur.com/oPGJUzw.jpg'
+              alt="Cars"
+              src='https://images.freeimages.com/images/large-previews/ef8/cars-1420635.jpg'
             />
             <img
-              alt='Bathing  in the snowflake'
-              src='https://i.imgur.com/z6iTu7s.jpg'
+              alt='Tyres'
+              src='https://images.freeimages.com/images/large-previews/1b4/car-1555101.jpg'
             />
             <img
-              alt='Dragging you deep into the woods'
-              src='https://i.imgur.com/4HpORDw.jpg'
+              alt='Perfect family'
+              src='https://images.freeimages.com/images/large-previews/3ec/bikes-on-a-cliff-1439703.jpg'
             />
             <img
-              alt='Alien lights'
-              src='https://i.imgur.com/6SWgo50.jpg'
+              alt='Beach'
+              src='https://images.freeimages.com/images/large-previews/d1b/ocean-1540203.jpg'
             />
           </MunduCarousel>
         </div>
