@@ -1,15 +1,27 @@
-const styles = {
+import type { CSSProperties } from 'react';
+
+interface CarouselStyles {
+  carouselWrapper: CSSProperties;
+  slideWrapper: CSSProperties;
+  leftArrow: CSSProperties;
+  rightArrow: CSSProperties;
+  dots: CSSProperties;
+  dot: CSSProperties;
+  inlineBlockArrows: CSSProperties;
+}
+
+const styles: CarouselStyles = {
   carouselWrapper: {
     display: 'inline-block',
     position: 'relative',
     touchAction: 'pan-y',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   slideWrapper: {
     width: '100%',
     position: 'absolute',
     top: 0,
-    left: 0
+    left: 0,
   },
   leftArrow: {
     position: 'absolute',
@@ -18,7 +30,7 @@ const styles = {
     left: 0,
     padding: 20,
     touchAction: 'none',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   rightArrow: {
     position: 'absolute',
@@ -27,7 +39,7 @@ const styles = {
     right: 0,
     padding: 20,
     touchAction: 'none',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   dots: {
     width: '100%',
@@ -36,7 +48,7 @@ const styles = {
     top: '85%',
     transform: 'translateY(-50%)',
     right: 0,
-    touchAction: 'none'
+    touchAction: 'none',
   },
   dot: {
     width: 8,
@@ -44,16 +56,16 @@ const styles = {
     display: 'inline-block',
     borderRadius: '50%',
     margin: 4,
-    opacity: .6,
+    opacity: 0.6,
     cursor: 'pointer',
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
   },
   inlineBlockArrows: {
     display: 'inline-block',
     verticalAlign: 'middle',
     cursor: 'pointer',
-    padding: 10
-  }
-}
+    padding: 10,
+  },
+};
 
-export default styles
+export default styles;

@@ -1,4 +1,7 @@
-docs
 src
-.babelrc
-webpack.config.js
+build
+tsup.config.ts
+vite.config.ts
+tsconfig.json
+.gitmodules
+.DS_Store

@@ -1,3 +1,6 @@
 node_modules
+/dist
+/build
 /lib
 package-lock.json
+.DS_Store
