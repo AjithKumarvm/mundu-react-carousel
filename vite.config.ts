@@ -4,6 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/mundu-react-carousel/',
   root: 'src/docs',
   build: {
     outDir: path.resolve(__dirname, 'build'),

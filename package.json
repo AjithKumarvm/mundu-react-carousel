@@ -22,6 +22,7 @@
     "preview": "vite preview",
     "predeploy": "npm run build:docs",
     "deploy": "gh-pages -d build",
+    "deploy:local": "npm run predeploy && cp -r build/ ../AjithKumarvm.github.io/public/mundu-react-carousel",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
